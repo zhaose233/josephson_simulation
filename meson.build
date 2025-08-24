@@ -9,14 +9,21 @@ project(
 cc = meson.get_compiler('c')
 m_dep = cc.find_library('m', required : false)
 
+libj_dep = library('libj', 'libj.c', dependencies: [m_dep])
+
 dependencies = [
   m_dep,
+]
+
+links = [
+  libj_dep,
 ]
 
 exe = executable(
   'josephson',
   'josephson.c',
   dependencies : dependencies,
+  link_with: links,
   install : true,
 )
 
