@@ -1,0 +1,55 @@
+---
+title: "Josephson Simulation"
+output:
+  pdf_document:
+    latex_engine: xelatex
+header-includes:
+  - \usepackage{xeCJK}
+---
+
+以下所有的图像都是在 $ \omega = 0.66 $，$ B_c = 0.5 $ 下绘制的。
+
+```{r drawing omega-phi-diagram}
+par(mfrow=c(2,3))
+ias = c("0.8000","1.0636", "1.0652", "1.0800", "1.2120", "1.3200")
+
+for(ia in ias){
+  ddd <- read.csv(paste0("chaos_",ia,".csv"))
+  plot(ddd$phi, ddd$omega, 
+       main=paste0("ia = ", ia),
+       xlab = "phi", ylab = "omega", type = "l")
+}
+```
+
+```{r drawing voltage}
+par(mfrow=c(2,3))
+ias = c("0.8000","1.0636", "1.0652", "1.0800", "1.2120", "1.3200")
+
+for(ia in ias){
+  ddd <- read.csv(paste0("chaos_",ia,".csv"))
+  
+  plot(ddd$tau, ddd$omega,
+       main=paste0("ia = ", ia),
+       xlab = "tau", ylab = "omega", type = "l")
+}
+```
+
+```{r drawing poincare}
+par(mfrow=c(2,3))
+ias = c("0.8000","1.0636", "1.0652", "1.0800", "1.2120", "1.3200")
+
+for(ia in ias){
+  ddd <- read.csv(paste0("chaos_poincare_",ia,".csv"))
+  
+  plot(ddd$phi, ddd$omega, 
+       main=paste0("ia = ", ia),
+       xlab = "phi", ylab = "omega", type = "p")
+}
+```
+
+I-V 图。取 $ B_c = 0.5 $。
+
+```{r drawing IV}
+dd <- read.csv("dc_out.csv")
+plot(dd$omega, dd$ib, type="l", xlab = "d(phi)/d(tau)", ylab = "ib", main = "IV diagram B_c = 0.5")
+```
